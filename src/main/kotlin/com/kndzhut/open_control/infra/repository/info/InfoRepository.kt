@@ -13,8 +13,8 @@ class InfoRepository(
     fun getAllKno(): List<Kno> = infoJDBCOperations.getAllKNO()
     fun addAllMeasures(measures: List<Measure>) = infoJDBCOperations.addAllMeasures(measures)
     fun getAllMeasuresByKno(knoId: Int): List<MeasureDto> = infoJDBCOperations.getAllMeasuresByKno(knoId)
-    fun createUser(userId: String, role: Role) =
-        infoJDBCOperations.createUser(userId, role)
+    fun createUser(login: String, role: Role, password: String): UUID =
+        infoJDBCOperations.createUser(login, role, password)
 
     fun updateInspectionUserInfo(user: InspectionUser) =
         infoJDBCOperations.updateInspectionUserInfo(user)
@@ -39,4 +39,6 @@ class InfoRepository(
 
     fun getKno(knoId: Int): String = infoJDBCOperations.getKNO(knoId)
     fun getMeasure(measureId: Int): String = infoJDBCOperations.getMeasure(measureId)
+    fun loginUser(login: String, password: String, role: Role?): UUID =
+        infoJDBCOperations.loginUser(login, password, role)
 }

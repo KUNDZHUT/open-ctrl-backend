@@ -6,7 +6,7 @@ create table kno
 
 create table app_user
 (
-    id   text primary key,
+    id   UUID primary key,
     role text not null
 );
 
@@ -23,7 +23,7 @@ create table address
 create table business
 (
     id             UUID primary key,
-    user_id        text not null,
+    user_id        UUID not null,
     type           text not null,
     kind           text not null,
     object_class   text not null,
@@ -36,7 +36,7 @@ create table business
 
 create table business_user_info
 (
-    id  text primary key,
+    id  UUID primary key,
     passport_id UUID,
     first_name text,
     surname text,
@@ -51,7 +51,7 @@ create table business_user_info
 
 create table inspection_user_info
 (
-    id text primary key,
+    id UUID primary key,
     first_name text,
     surname text,
     last_name  text,
@@ -77,8 +77,8 @@ create table appointments
     appointment_time timestamp not null,
     kno_id           bigint    not null,
     measure_id       bigint,
-    business_id      text,
-    inspection_id    text,
+    business_id      UUID,
+    inspection_id    UUID,
     status           text      not null,
 
     unique (appointment_time, kno_id),

@@ -43,10 +43,12 @@ class InfoJDBCOperations(
         }
     }
 
-    fun createUser(userId: String, role: Role) {
-        val query = "insert into app_user values ('$userId', '${role.name}');" +
-                "insert into ${role.name.lowercase()}_user_info (id) values ('$userId')"
+    fun createUser(login: String, role: Role, password: String): UUID {
+        val id = UUID.randomUUID()
+        val query = "insert into app_user values ('$id', '${role.name}', '$login', '$password');" +
+                "insert into ${role.name.lowercase()}_user_info (id) values ('$id')"
         jdbcTemplate.execute(query)
+        return id
     }
 
     fun updateInspectionUserInfo(user: InspectionUser) {
@@ -141,6 +143,12 @@ class InfoJDBCOperations(
         val query =
             "select name from measures where id=$measureId"
         return jdbcTemplate.query(query) { rs, _ -> rs.getString("name") }[0]
+    }
+
+    fun loginUser(login: String, password: String, role: Role?): UUID {
+        val query =
+            "select id from app_user where login='$login' and password='$password' and role='${role?.name}'"
+        return jdbcTemplate.query(query) { rs, _ -> rs.getObject("id") as UUID }.firstOrNull() ?: throw IllegalArgumentException("Authorizaton failed")
     }
 
 }

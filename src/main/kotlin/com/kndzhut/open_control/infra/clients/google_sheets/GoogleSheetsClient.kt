@@ -67,7 +67,7 @@ class GoogleSheetsClient {
             .setDataStoreFactory(FileDataStoreFactory(File(TOKENS_DIRECTORY_PATH)))
             .setAccessType("offline")
             .build()
-        val receiver = LocalServerReceiver.Builder().setPort(8888).build()
+        val receiver = LocalServerReceiver.Builder().setPort(5555).build()
         return AuthorizationCodeInstalledApp(flow, receiver).authorize("user")
     }
 
